@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mongo-mapping
+        xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+    <document
+            db="crypto-rates"
+            collection="hourlyRates"
+            name="App\Document\CurrencyRate"
+            repository-class="App\Repository\CurrencyRateRepository">
+        <id/>
+        <field name="baseCurrency" type="string" nullable="false" />
+        <field name="quotedCurrency" type="string" nullable="false" />
+        <field name="date" type="date_immutable" nullable="false" />
+        <field name="openRate" type="decimal128" nullable="false" />
+        <field name="closeRate" type="decimal128" nullable="false" />
+        <field name="highRate" type="decimal128" nullable="false" />
+        <field name="lowRate" type="decimal128" nullable="false" />
+        <indexes>
+            <index unique="true">
+                <key name="baseCurrency" />
+                <key name="quotedCurrency" />
+                <key name="date" />
+                <option name="background" value="true"/>
+            </index>
+        </indexes>
+    </document>
+</doctrine-mongo-mapping>

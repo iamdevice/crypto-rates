@@ -1,0 +1,6 @@
+getRates:
+  path: /rates/{baseCurrency}/{quotedCurrency}
+  controller: App\Action\GetRatesAction
+  requirements:
+    baseCurrency: \w+
+    quotedCurrency: \w+

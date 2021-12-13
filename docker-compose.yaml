@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./.docker/php
+      dockerfile: Dockerfile
+      args:
+        NGINX_UNIT_VERSION: 1.26.1
+    image: crypto-rates:latest
+    ports:
+      - "${HOST_HTTP_PORT}:80"
+    environment:
+      APP_USER: app
+      APP_USER_ID: ${HOST_USER_ID:-1001}
+      APP_USER_GROUP_ID: ${HOST_USER_GROUP_ID:-1001}
+    volumes:
+      - ./:/var/www/html
+      - ./.docker/nginx-unit/app-config.json:/docker-entrypoint.d/app-config.json
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-password}
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
